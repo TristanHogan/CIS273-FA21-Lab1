@@ -1,5 +1,5 @@
 ﻿using System;
-namespace PracticeExercise3
+namespace KthToLast
 {
 
     public class DoublyLinkedListNode<T>
@@ -45,6 +45,62 @@ namespace PracticeExercise3
 
                 return count;
             }
+        }
+
+        public bool IsEmpty => throw new NotImplementedException();
+
+        public T First => throw new NotImplementedException();
+
+        public T Last => throw new NotImplementedException();
+
+        public void Append(T item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Prepend(T item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InsertAfter(T newValue, T existingValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InsertAt(T newValue, int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int FirstIndexOf(T existingValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(T value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveAt(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<T> Reverse()
+        {
+            throw new NotImplementedException();
+        }
+
+        public T KthToLast(int k)
+        {
+            throw new NotImplementedException();
         }
     }
 }

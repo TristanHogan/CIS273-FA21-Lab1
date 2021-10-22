@@ -1,5 +1,5 @@
 ﻿using System;
-namespace PracticeExercise2
+namespace KthToLast
 {
 
     public class LinkedListNode<T>
@@ -212,6 +212,11 @@ namespace PracticeExercise2
             result += "]";
 
             return result;
+        }
+
+        public T KthToLast(int k)
+        {
+            throw new NotImplementedException();
         }
     }
 }

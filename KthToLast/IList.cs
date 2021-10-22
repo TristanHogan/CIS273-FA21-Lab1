@@ -1,5 +1,5 @@
 ﻿using System;
-namespace PracticeExercise2
+namespace KthToLast
 {
     public interface IList<T>
     {
@@ -38,5 +38,8 @@ namespace PracticeExercise2
 
         // TODO
         IList<T> Reverse();
+
+        // TODO
+        T KthToLast(int k);
     }
 }
