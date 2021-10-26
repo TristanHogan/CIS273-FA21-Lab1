@@ -96,6 +96,11 @@ namespace Polynomial
         {
             string result = "";
 
+            if(terms.Count == 0)
+            {
+                return "0";
+            }
+
             foreach( Term t in terms)
             {
                 result += "+" + t.ToString();
