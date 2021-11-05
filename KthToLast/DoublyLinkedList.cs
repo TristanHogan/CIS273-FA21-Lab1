@@ -100,7 +100,15 @@ namespace KthToLast
 
         public T KthToLast(int k)
         {
-            throw new NotImplementedException();
+            int count = k;
+            var currentNode = Tail;
+            while (count != 0)
+            {
+                currentNode = currentNode.Prev;
+                count--;
+
+            }
+            return currentNode.Data;
         }
     }
 }
