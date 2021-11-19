@@ -12,6 +12,11 @@ namespace Palindrome
 
         public static bool IsPalindrome<T>(LinkedList<T> linkedList)
         {
+            var reversedList = linkedList.Reverse();
+            if (reversedList.ToString().Equals(linkedList.ToString()))
+            {
+                return true;
+            }
             return false;
         }
 

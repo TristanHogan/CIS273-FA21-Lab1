@@ -1,5 +1,5 @@
 ﻿using System;
-namespace KthToLast
+namespace Palindrome
 {
 
     public class LinkedListNode<T>
@@ -54,7 +54,7 @@ namespace KthToLast
 
         public T Last => Tail.Data;
 
-        public void Append(T item)
+        public void AddLast(T item)
         {
             var newNode = new LinkedListNode<T>(item);
 
@@ -133,7 +133,7 @@ namespace KthToLast
                 currentNode = currentNode.Next;
             }
 
-            this.Append(newValue);
+            this.AddLast(newValue);
         }
 
         public void InsertAt(T newValue, int index)
@@ -153,7 +153,7 @@ namespace KthToLast
             }
             if (index == Length)
             {
-                this.Append(newValue);
+                this.AddLast(newValue);
                 return;
             }
 
@@ -330,14 +330,14 @@ namespace KthToLast
             var idNode = Head;
             var lastNode = Head;
             int i = 0;
-            while(i != k)
+            while (i != k)
             {
-               
+
                 lastNode = lastNode.Next;
                 i++;
             }
 
-            while(lastNode != Tail)
+            while (lastNode != Tail)
             {
                 idNode = idNode.Next;
                 lastNode = lastNode.Next;

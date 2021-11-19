@@ -8,7 +8,7 @@ namespace KthToLast
         public DoublyLinkedListNode<T> Next { get; set; }
         public DoublyLinkedListNode<T> Prev { get; set; }
 
-        public DoublyLinkedListNode(T data = default(T), DoublyLinkedListNode<T> prev = null, DoublyLinkedListNode < T> next = null)
+        public DoublyLinkedListNode(T data = default(T), DoublyLinkedListNode<T> prev = null, DoublyLinkedListNode<T> next = null)
         {
             Data = data;
             Prev = prev;
@@ -22,7 +22,7 @@ namespace KthToLast
         }
     }
 
-    public class DoublyLinkedList<T>: IList<T>
+    public class DoublyLinkedList<T> : IList<T>
     {
         public DoublyLinkedListNode<T> Head { get; set; }
         public DoublyLinkedListNode<T> Tail { get; set; }
@@ -30,6 +30,7 @@ namespace KthToLast
         public DoublyLinkedList()
         {
         }
+
 
         public int Length
         {
@@ -47,55 +48,300 @@ namespace KthToLast
             }
         }
 
-        public bool IsEmpty => throw new NotImplementedException();
+        public bool IsEmpty => Head == null;
 
-        public T First => throw new NotImplementedException();
+        public T First => Head.Data;
 
-        public T Last => throw new NotImplementedException();
+        public T Last => Tail.Data;
 
         public void Append(T item)
         {
-            throw new NotImplementedException();
-        }
+            var newNode = new DoublyLinkedListNode<T>(item);
 
-        public void Prepend(T item)
-        {
-            throw new NotImplementedException();
-        }
+            // empty list
+            if (IsEmpty)
+            {
+                Head = newNode;
+                Tail = newNode;
+            }
+            // non empty list
+            else
+            {
+                // Add new node after Tail
+                Tail.Next = newNode;
 
-        public void InsertAfter(T newValue, T existingValue)
-        {
-            throw new NotImplementedException();
-        }
+                // Update Tail
+                Tail = newNode;
 
-        public void InsertAt(T newValue, int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int FirstIndexOf(T existingValue)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(T value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveAt(int index)
-        {
-            throw new NotImplementedException();
+            }
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            Head = null;
+            Tail = null;
+        }
+
+        public int FirstIndexOf(T existingValue)
+        {
+            int index = 0;
+
+            var currentNode = Head;
+            while (currentNode != null)
+            {
+                if (currentNode.Data.Equals(existingValue))
+                {
+                    return index;
+                }
+                index++;
+                currentNode = currentNode.Next;
+            }
+
+            //for ( currentNode = Head, index=0; currentNode.Next != null; currentNode = currentNode.Next, index++)
+            //{
+            //    if (currentNode.Data.Equals(existingValue))
+            //    {
+            //        return index;
+            //    }
+            //}
+
+            return -1;
+
+        }
+
+        public void InsertAfter(T newValue, T existingValue)
+        {
+            var currentNode = Head;
+
+
+
+            while (currentNode != null)
+            {
+                if (currentNode.Data.Equals(existingValue))
+                {
+                    var node = new DoublyLinkedListNode<T>(newValue, currentNode.Next);
+                    currentNode.Next = node;
+                    node.Prev = currentNode;
+                    node.Next = Tail;
+                    Tail.Prev = node;
+
+                    if (currentNode == Tail)
+                    {
+                        Tail = node;
+                    }
+
+                    return;
+                }
+
+                currentNode = currentNode.Next;
+            }
+
+            this.Append(newValue);
+        }
+
+        public void InsertAt(T newValue, int index)
+        {
+
+
+            if (index > Length || index < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            if (index == 0)
+            {
+                this.Prepend(newValue);
+
+                return;
+            }
+            if (index == Length)
+            {
+                this.Append(newValue);
+                return;
+            }
+
+
+            var currentNode = Head;
+            DoublyLinkedListNode<T> prevNode = Head;
+            for (var I = 0; I < Length; I++)
+            {
+
+
+                if (index == I)
+                {
+                    var node = new DoublyLinkedListNode<T>(newValue, currentNode);
+                    prevNode.Next = node;
+                    return;
+                }
+
+                prevNode = currentNode;
+                currentNode = currentNode.Next;
+            }
+        }
+
+
+        public void Prepend(T item)
+        {
+            var newNode = new DoublyLinkedListNode<T>(item);
+
+
+            if (IsEmpty)
+            {
+                Head = newNode;
+                Tail = newNode;
+            }
+
+            else
+            {
+                newNode.Next = Head;
+                Head.Prev = newNode;
+                Head = newNode;
+
+            }
+
+            //DoublyLinkedListNode<T> newNode = new DoublyLinkedListNode<T>(item, Head);
+            //Head = newNode;
+            //if (this.Length == 1)
+            //{
+            //    Tail = newNode;
+            //}
+
+        }
+
+        public void Remove(T value)
+        {
+            // If the list is empty, return immediately 
+            if (IsEmpty)
+            {
+                return;
+            }
+
+            // Remove head
+            if (Head.Data.Equals(value))
+            {
+                // Removing node from 1-element list
+                if (Head == Tail)
+                {
+                    Tail = null;
+                    Head = null;
+                }
+                else
+                {
+                    Head = Head.Next;
+                }
+                return;
+            }
+
+            // Remove non-head node
+
+            var currentNode = Head;
+
+            while (currentNode != null)
+            {
+                if (currentNode.Next != null && currentNode.Next.Data.Equals(value))
+                {
+                    var nodeToDelete = currentNode.Next;
+                    if (nodeToDelete == Tail)
+                    {
+                        currentNode.Next = null;
+                        Tail = currentNode;
+                    }
+                    else
+                    {
+                        // update previous node's next to skip the deleted node
+                        currentNode.Next = currentNode.Next.Next;
+                        nodeToDelete.Next = null;
+                    }
+                }
+
+                currentNode = currentNode.Next;
+            }
+
+        }
+
+        public void RemoveAt(int index)
+        {
+
+
+            if (index >= Length)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            if (index < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            if (Length == 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            if (index == 0)
+            {
+                Head = Head.Next;
+                return;
+            }
+
+            var currentNode = Head;
+            DoublyLinkedListNode<T> prevNode = Head;
+            for (var I = 0; I < Length - 1; I++)
+            {
+                if (I == Length - 2)
+                {
+
+                    currentNode.Next = currentNode.Next.Next;
+                    Tail = currentNode;
+
+
+                    return;
+                }
+
+                if (index == I)
+                {
+                    prevNode.Next = prevNode.Next.Next;
+                    return;
+                }
+
+                prevNode = currentNode;
+                currentNode = currentNode.Next;
+            }
         }
 
         public IList<T> Reverse()
         {
-            throw new NotImplementedException();
+            var result = new LinkedList<T>();
+
+            var currentNode = Head;
+            while (currentNode != null)
+            {
+                //Prepend every single one of them
+                result.Prepend(currentNode.Data);
+
+                currentNode = currentNode.Next;
+            }
+
+            return result;
+        }
+
+        public override string ToString()
+        {
+            string result = "[";
+            var currentNode = Head;
+            while (currentNode != null)
+            {
+                result += currentNode.Data;
+                if (currentNode != Tail)
+                {
+                    result += ", ";
+                }
+                currentNode = currentNode.Next;
+            }
+
+            result += "]";
+
+            return result;
         }
 
         public T KthToLast(int k)
@@ -112,3 +358,6 @@ namespace KthToLast
         }
     }
 }
+
+
+

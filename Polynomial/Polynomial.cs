@@ -79,12 +79,17 @@ namespace Polynomial
 
         public static Polynomial Subtract(Polynomial p1, Polynomial p2)
         {
-            return null;
+            p1 = Negate(p1);
+            return Add(p1, p2);
         }
 
         public static Polynomial Negate(Polynomial p)
         {
-            return null;
+            foreach (Term t in p.terms)
+            {
+                t.Coefficient = -(t.Coefficient);
+            }
+            return p;
         }
 
         public static Polynomial Multiply(Polynomial p1, Polynomial p2)
@@ -101,9 +106,33 @@ namespace Polynomial
                 return "0";
             }
 
-            foreach( Term t in terms)
+            foreach (Term t in terms)
             {
-                result += "+" + t.ToString();
+                if (result == "")
+                {
+                    if (t.Coefficient < 0)
+                    {
+                        result += "-" + t.ToString();
+                    }
+                    else
+                    {
+                        result += t.ToString();
+                    }
+
+                }
+                else
+                {
+                    if (t.Coefficient == 0)
+                    {
+                        result += 0;
+                    }
+                    else
+                    {
+                        result += "+" + t.ToString();
+                    }
+                }
+
+
             }
 
             return result;
